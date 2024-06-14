@@ -38,19 +38,29 @@ async function runExists(db, run) {
 }
 export const save = async (emp) => {
     if (await runExists(db, emp.run)) {
-        alert('RUN ya existe!');
+        Swal.fire('RUN ya existe!','','error');
     }else{
         addDoc(collection(db, 'Biblioteca'),
 emp);
     }
 }
+export const remove = async (docId) => {
+	const docRef = await doc(db, 'Biblioteca', docId);
+	deleteDoc(docRef)
+		.then(() => {
+			alert('Eliminado exitosamente');
+		})
+		.catch((error) => {
+			alert('Error al eliminar: ', error);
+		});
+}
 
 //función remove que sirve para eliminar un documento 
-export const remove = (id) => {
+//export const remove = (id) => {
     //deleteDoc es una función de firestore que permite eliminar un documento 
     //doc es una función de firestore que permite traer un documento por su id
-    deleteDoc(doc(db, 'Biblioteca', id))
-}
+    //deleteDoc(doc(db, 'Biblioteca', id))
+//}
 
 //selectOne función que me permite selección un documento 
 //getDoc es la función firestore que permite obtener un documento por su id
